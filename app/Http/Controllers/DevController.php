@@ -31,13 +31,25 @@ class DevController extends Controller
         }
 
         try {
-            $results = DB::select($sql);
+            $perPage = 10;
+            $page = $request->input('page', 1);
+            $offset = ($page - 1) * $perPage;
+            $paginatedSql = $sql . " LIMIT $perPage OFFSET $offset";
+            $results = DB::select($paginatedSql);
+            $totalResults = count(DB::select($sql));
+            $totalPages = ceil($totalResults / $perPage);
+            //记录日志
             SqlLog::create([
                 'user_id' => $user->id,
                 'sql' => $sql,
                 'error' => null
             ]);
-            return response()->json(['results' => $results]);
+            //返回响应结果
+            return response()->json([
+                'results' => $results,
+                'totalPages' => $totalPages,
+                'currentPage' => $page
+            ]);
         } catch (\Exception $e) {
             SqlLog::create([
                 'user_id' => $user->id,
