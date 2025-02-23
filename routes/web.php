@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DevController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+
+Route::middleware(['auth', 'permission:admin'])->group(function () {
+    Route::get('/dev', [DevController::class, 'index'])->name('dev.index');
+    Route::post('/dev/execute', [DevController::class, 'execute'])->name('dev.execute');
+    Route::post('/dev/export-excel', [DevController::class, 'exportExcel'])->name('dev.export-excel');
+    Route::post('/dev/export-json', [DevController::class, 'exportJson'])->name('dev.export-json');
 });
