@@ -34,14 +34,12 @@ php artisan db:seed
 # 开发环境编译
 npm run dev
 
-# 生产环境编译（生产部署时使用）
-npm run production
 六、启动服务
 # 启动开发服务器
-php artisan serve --port=8000
+php artisan serve 
 
 # 访问地址
-http://localhost:8000
+http://localhost
 七、默认登录信息
 字段	值
 用户名	admin@example.com
@@ -66,3 +64,15 @@ JSON导出包含数组结构
 
 执行SQL后在 sql_logs 表生成记录
 包含执行时间、用户ID和SQL语句
+
+登录信息
+用户名：admin@example.com
+密码：password
+功能说明
+登录功能：用户可以使用用户名和密码登录系统。
+权限控制：只有具有 admin 权限的用户才能访问 /dev 页面。
+SQL 执行：用户可以在 /dev 页面输入 SQL 语句，点击 Execute 按钮执行 SQL 并显示结果。
+分页功能：结果支持分页显示，减少浏览器负载。
+导出功能：用户可以点击 Export Excel 和 Export Json 按钮导出 SQL 执行结果。
+错误处理：如果 SQL 语句有错误，页面会显示错误信息。
+日志记录：所有 SQL 执行日志会记录到 sql_logs 表中。
